@@ -16,14 +16,7 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
-        // User::factory(10)->create();
-
-        User::create([
-            'name' => 'faisal ridhani',
-            'email' => 'thinkbear@gmail.com',
-            'password' => bcrypt('password')
-        ]);
-
+         User::factory(5)->create();
         Category::create([
             'name' => 'Web Programming',
             'slug' => 'web-programming'
@@ -36,32 +29,6 @@ class DatabaseSeeder extends Seeder
             'name' => 'Personal',
             'slug' => 'personal'
         ]);
-
-        Post::create([
-            'title' => 'Judul Pertama',
-            'slug' => 'judul-pertama',
-            'category_id' => 2,
-            'excerpt' => "igma reqwas",
-            'body'=> "<p>enim at in obcaecati tempora beatae laudantium voluptate aperiam
-                    excepturi delectus recusandae nemo aliquam deleniti temporibus itaque? Modi,
-                    quod voluptate. Omnis, dolor eveniet nemo aliquam amet iusto.</p>
-                    <p>enim at in obcaecati tempora beatae laudantium voluptate aperiam
-                    excepturi delectus recusandae nemo aliquam deleniti temporibus itaque? Modi,
-                    quod voluptate. Omnis, dolor eveniet nemo aliquam amet iusto.</p>",
-            'user_id' => 1
-        ]);
-        Post::create([
-            'title' => 'Judul Kedua',
-            'slug' => 'judul-ke-dua',
-            'category_id' => 1,
-            'excerpt' => "igma reqwas",
-            'body'=> "<p>enim at in obcaecati tempora beatae laudantium voluptate aperiam
-                    excepturi delectus recusandae nemo aliquam deleniti temporibus itaque? Modi,
-                    quod voluptate. Omnis, dolor eveniet nemo aliquam amet iusto.</p>
-                    <p>enim at in obcaecati tempora beatae laudantium voluptate aperiam
-                    excepturi delectus recusandae nemo aliquam deleniti temporibus itaque? Modi,
-                    quod voluptate. Omnis, dolor eveniet nemo aliquam amet iusto.</p>",
-            'user_id' => 1
-        ]);
+        Post::factory(35)->create();
     }
 }
