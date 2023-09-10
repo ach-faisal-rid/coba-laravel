@@ -1,6 +1,17 @@
 @extends('layouts.main')
 @section('container')
-    <h1 class="card-mb-5">{{$title}}</h1>
+    <h1 class="card-mb-5 text-center">{{$title}}</h1>
+
+    <div class="row justify-content-center mb-3">
+        <div class="col-md-6">
+            <form action="/blog">
+                <div class="input-group mb-3">
+                    <input type="text" placeholder="search.." name="search" class="form-control" value="{{request('search')}}">
+                    <button class="btn btn-danger" type="submit" >search</button>
+                </div>
+            </form>
+        </div>
+    </div>
 
     @if($posts->count())
     <div class="card mb-3">
@@ -19,15 +30,14 @@
     <a href="/posts/{{$posts[0]->slug}}" class="text-decoration-none btn btn-primary">Read More..</a>
     </div>
     </div>
-    @else
-        <p class="text-center fs-4">no post found.</p>
-    @endif
+
 
     <div class="container">
         <div class="row">
             @foreach($posts->skip(1) as $post)
-            <div class="col-md-4">
+            <div class="col-md-4 mb-3">
                 <div class="card">
+                    <div class="position-absolute px-3 py-2 bg-danger"><a href="/categories/{{$post->category->slug}}" class=" text-white text-decoration-none">{{$post->category->name}}</a></div>
                     <img src="https://source.unsplash.com/500x400?{{$post->category->name}}" class="card-img-top" alt="{{$post->category->name}}">
                     <div class="card-body">
                         <h5 class="card-title">{{$post-> title}}</h5>
@@ -46,12 +56,8 @@
         </div>
     </div>
 
-{{--    @foreach($posts->skip(1) as $post)--}}
-{{--        <article class="mb-5 border-bottom pb-3">--}}
-{{--            <h2><a href="/posts/{{ $post->slug }}" class="text-decoration-none">{{$post-> title}}</a></h2>--}}
-{{--            <h5>By: <a href="/authors/{{$post->author->username}}" class="text-decoration-none">{{$post->author->name}}</a> in <a href="/categories/{{$post->category->slug}}" class="text-decoration-none">{{ $post->category->name }}</a></h5>--}}
-{{--            <p>{{$post->excerpt}}</p>--}}
-{{--            <a href="/posts/{{$post->slug}}" class="text-decoration-none">Read More..</a>--}}
-{{--        </article>--}}
-{{--    @endforeach--}}
+    @else
+        <p class="text-center fs-4">no post found.</p>
+    @endif
+
 @endsection
