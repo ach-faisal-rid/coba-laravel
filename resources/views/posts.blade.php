@@ -5,6 +5,12 @@
     <div class="row justify-content-center mb-3">
         <div class="col-md-6">
             <form action="/blog">
+                @if(request('category'))
+                    <input type="hidden" name="category" value="{{request('category')}}">
+                @endif
+                    @if(request('author'))
+                    <input type="hidden" name="author" value="{{request('author')}}">
+                @endif
                 <div class="input-group mb-3">
                     <input type="text" placeholder="search.." name="search" class="form-control" value="{{request('search')}}">
                     <button class="btn btn-danger" type="submit" >search</button>
@@ -23,7 +29,7 @@
         </h3>
     <p>
         <small class="text-muted">
-            By: <a href="/authors/{{$posts[0]->author->username}}" class="text-decoration-none">{{$posts[0]->author->name}}</a> in <a href="/categories/{{$posts[0]->category->slug}}" class="text-decoration-none">{{ $posts[0]->category->name }}</a> {{$posts[0]->created_at->diffForHumans()}}
+            By: <a href="/blog?author={{$posts[0]->author->username}}" class="text-decoration-none">{{$posts[0]->author->name}}</a> in <a href="/blog?category={{$posts[0]->category->slug}}" class="text-decoration-none">{{ $posts[0]->category->name }}</a> {{$posts[0]->created_at->diffForHumans()}}
         </small>
     </p>
     <p class="card-text">{{$posts[0]->excerpt}}</p>
@@ -37,13 +43,13 @@
             @foreach($posts->skip(1) as $post)
             <div class="col-md-4 mb-3">
                 <div class="card">
-                    <div class="position-absolute px-3 py-2 bg-danger"><a href="/categories/{{$post->category->slug}}" class=" text-white text-decoration-none">{{$post->category->name}}</a></div>
+                    <div class="position-absolute px-3 py-2 bg-danger"><a href="/blog?category={{$post->category->slug}}" class=" text-white text-decoration-none">{{$post->category->name}}</a></div>
                     <img src="https://source.unsplash.com/500x400?{{$post->category->name}}" class="card-img-top" alt="{{$post->category->name}}">
                     <div class="card-body">
                         <h5 class="card-title">{{$post-> title}}</h5>
                         <p>
                             <small class="text-muted">
-                                By: <a href="/authors/{{$post->author->username}}" class="text-decoration-none">{{$post->author->name}}</a>
+                                By: <a href="/blog?author={{$post->author->username}}" class="text-decoration-none">{{$post->author->name}}</a>
                                 {{$post->created_at->diffForHumans()}}
                             </small>
                         </p>
@@ -59,5 +65,7 @@
     @else
         <p class="text-center fs-4">no post found.</p>
     @endif
+
+    {{$posts->links()}}
 
 @endsection
