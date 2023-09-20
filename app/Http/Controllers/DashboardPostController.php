@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Models\Post;
 use Illuminate\Http\Request;
+use Illuminate\Support\Str;
+
 
 class DashboardPostController extends Controller
 {
@@ -26,7 +28,7 @@ class DashboardPostController extends Controller
      */
     public function create()
     {
-        //
+        return view('dashboard.posts.create');
     }
 
     /**
@@ -86,4 +88,22 @@ class DashboardPostController extends Controller
     {
         //
     }
+
+    public function slug()
+    {
+        $slug = Str::of(request('title'))->slug()->value;
+        while (true) {
+            $post = Post::query()->where('slug', '=', $slug)->get();
+            if ($post->isNotEmpty()) {
+                $slug .= '-' . Str::lower(Str::random(5));
+                continue;
+            } else {
+                break;
+            }
+        }
+        return response()->json([
+            "slug"  => $slug
+        ]);
+    }
+
 }
